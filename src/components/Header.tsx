@@ -16,28 +16,9 @@ const Header = () => {
                     <span className="text-xl font-bold text-foreground">EduNimbus</span>
                 </div>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center space-x-8">
 
-                    <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
-                        Narxlar
-                    </a>
-                    <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
-                        Biz haqimizda
-                    </a>
-                    <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                        Aloqa
-                    </a>
-                </nav>
 
-                <div className="hidden md:flex items-center space-x-4">
-                    <Button variant="ghost" asChild>
-                        <Link to="/login">Kirish</Link>
-                    </Button>
-                    <Button variant="hero" asChild>
-                        <Link to="/register">Bepul sinab ko'ring</Link>
-                    </Button>
-                </div>
+             
 
                 {/* Mobile Menu Button */}
                 <button

@@ -7,6 +7,7 @@ import { BookOpen, Lock, Mail, Eye, EyeOff } from "lucide-react";
 import {Link, useNavigate} from "react-router-dom";
 import {useToast} from "@/hooks/use-toast.ts";
 import {useAuth} from "@/contexts/AuthContext.tsx";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -66,6 +67,7 @@ const Login = () => {
 
         setIsLoading(false);
     };
+
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
