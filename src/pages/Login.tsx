@@ -4,6 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BookOpen, Lock, Mail, Eye, EyeOff } from "lucide-react";
+import {Link, useNavigate} from "react-router-dom";
+import {useToast} from "@/hooks/use-toast.ts";
+import {useAuth} from "@/contexts/AuthContext.tsx";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -11,30 +14,60 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const { toast } = useToast();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    // TODO: API call to /api/auth/login
-    // const response = await fetch('/api/auth/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ email, password })
-    // });
-    // const data = await response.json();
-    // localStorage.setItem('token', data.token);
-    // localStorage.setItem('user', JSON.stringify(data.user));
-    // Redirect based on role
-    
-    // Mock login for now
-    setTimeout(() => {
-      console.log("Login attempt:", { email, password });
-      setIsLoading(false);
-      // Mock redirect based on role
-      alert("Login muvaffaqiyatli! (Mock)");
-    }, 1000);
-  };
+        const user = await login(email, password);
+        console.log(user)
+
+        if (user) {
+            toast({
+                title: "Welcome back!",
+                description: "You have successfully logged in.",
+            });
+            console.log("Login successful:", user);
+            // Redirect based on user role
+            if (!user) {
+                toast({
+                    title: "Error",
+                    description: "User data not found.",
+                    variant: "destructive",
+                });
+                setIsLoading(false);
+                return;
+            }
+            switch (user.role){
+                case 'super-admin':
+                    navigate('/account/super-admin');
+                    break;
+                case 'center-admin':
+                    navigate('/account/center-admin');
+                    break;
+                case 'teacher':
+                    navigate('/account/teacher');
+                    break;
+                case 'student':
+                    navigate('/account/student');
+                    break;
+                default:
+                    navigate('/');
+                    break;
+            }
+        } else {
+            toast({
+                title: "Login failed",
+                description: "Please check your email and password.",
+                variant: "destructive",
+            });
+        }
+
+        setIsLoading(false);
+    };
+
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
