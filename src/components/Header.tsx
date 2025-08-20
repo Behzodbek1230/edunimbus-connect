@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { BookOpen, Menu, X } from "lucide-react";
 import { useState } from "react";
+import {Link} from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,8 +33,12 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost">Kirish</Button>
-          <Button variant="hero">Bepul sinab ko'ring</Button>
+          <Button variant="ghost" asChild>
+            <Link to="/login">Kirish</Link>
+          </Button>
+          <Button variant="hero" asChild>
+            <Link to="/register">Bepul sinab ko'ring</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
